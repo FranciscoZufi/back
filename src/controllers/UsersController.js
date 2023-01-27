@@ -4,19 +4,20 @@ const AppError = require('../utils/AppError')
 
 class UsersController {
   async create(request, response) {
-    const { name, email, password } = request.body
+    const { name, email, password, admin } = request.body
 
     const checkUserExist = await knex('users').where({ email })
 
     if (checkUserExist[0]) {
-      throw new AppError('this email is already in use')
+      throw new AppError('Este email já está em uso!')
     }
     const hashedPassword = await hash(password, 8)
 
     const user = await knex('users').insert({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      admin
     })
 
     return response.json({ userName: name, email })

@@ -13,7 +13,7 @@ class followUpController {
       name,
       description
     })
-    return response.json({ followUp })
+    return response.json(followUp)
   }
   async index(request, response) {
     const followUp_id = request.followUp.id
@@ -42,6 +42,12 @@ class followUpController {
       name,
       description
     })
+    return response.json()
+  }
+  async delete(request, response) {
+    const { id } = request.params
+
+    await knex('followup').where({ id }).delete()
     return response.json()
   }
 }
