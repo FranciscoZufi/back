@@ -10,4 +10,4 @@ followUpRoutes.post('/', followUpController.create)
 followUpRoutes.get('/', followUpController.index)
 followUpRoutes.put('/:id', ensureAuthenticated, followUpController.update)
 
-module.exports = usersRoutes
+module.exports = followUpRoutes
