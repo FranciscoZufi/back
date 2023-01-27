@@ -12,13 +12,14 @@ const platesController = new PlatesController()
 const platesAvatarController = new PlatesAvatarController()
 
 platesRoutes.use(ensureAuthenticated)
+
 platesRoutes.post('/', platesController.create)
 platesRoutes.get('/', platesController.index)
 platesRoutes.put('/:id', platesController.update)
 platesRoutes.patch(
   '/avatar',
   upload.single('avatar'),
-  platesAvatarController.update
+  platesAvatarController.updateImg
 )
 platesRoutes.get('/:id', platesController.show)
 platesRoutes.delete('/:id', platesController.delete)
