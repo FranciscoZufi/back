@@ -2,16 +2,18 @@ const knex = require('../database/knex')
 
 class platesController {
   async index(request, response) {
-    const plate_id = request.plate.id
-
-    const plate = await knex('plates').where({ plate_id }).groupBy('name')
+    const followUp = request.followUp.id
+    console.log({ followUp })
+    const plate = await knex('plates')
+      .where({ followUp_id: followUp })
+      .groupBy('name')
 
     return response.json({ plate })
   }
   async create(request, response) {
     const { name, description, ingredients, value } = request.body
 
-    const checkPlateExist = await knex('plates').whereILike({ name })
+    const checkPlateExist = await knex('plates').whereLike('name', `${name}`)
 
     if (checkPlateExist[0]) {
       throw new AppError('Este prato já existe!')

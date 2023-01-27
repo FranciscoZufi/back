@@ -2,24 +2,28 @@ const knex = require('../database/knex')
 class followUpController {
   async create(request, response) {
     const { name, description } = request.body
+    const { id } = request.user
 
-    const checkFollowUpExist = await knex('followUp').whereILike({ name })
+    const checkFollowUpExist = await knex('followUp').whereLike(
+      'name',
+      `${name}`
+    )
 
     if (checkFollowUpExist[0]) {
       throw new AppError('Este seguimento já existe!')
     }
 
-    const followUp = await knex('plates').insert({
+    const followUp = await knex('followUp').insert({
       name,
-      description
+      description,
+      user_id: id
     })
     return response.json(followUp)
   }
   async index(request, response) {
-    const followUp_id = request.followUp.id
-
+    const user = request.user.id
     const followUp = await knex('followUp')
-      .where({ followUp_id })
+      .where({ user_id: user })
       .groupBy('name')
 
     return response.json({ followUp })

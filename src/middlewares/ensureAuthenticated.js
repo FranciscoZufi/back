@@ -11,10 +11,10 @@ function ensureAuthenticated(request, response, next) {
 
   const [, token] = authHeader.split(' ')
   try {
-    const { sub: user_id } = verify(token, authConfig.jwt.secret)
-
+    const { payload } = verify(token, authConfig.jwt.secret)
     request.user = {
-      id: Number(user_id)
+      admin: payload.admin,
+      id: payload.user_id
     }
     return next()
   } catch {
