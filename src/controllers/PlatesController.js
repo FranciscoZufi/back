@@ -2,16 +2,18 @@ const knex = require('../database/knex')
 
 class platesController {
   async index(request, response) {
-    const followUp = request.followUp.id
-    console.log({ followUp })
-    const plate = await knex('plates')
-      .where({ followUp_id: followUp })
-      .groupBy('name')
+    const user = request.user.id
 
-    return response.json({ plate })
+    const followUp = await knex('followUp').where({ user_id: user }).first()
+    console.log({ followUp })
+    const plates = await knex('plates')
+      .where({ followUp_id: followUp.id })
+      .orderBy('id')
+    return response.json({ followUp, plates })
   }
   async create(request, response) {
-    const { name, description, ingredients, value } = request.body
+    const { name, description, ingredients, value, followUp_id, user_id } =
+      request.body
 
     const checkPlateExist = await knex('plates').whereLike('name', `${name}`)
 
@@ -23,7 +25,9 @@ class platesController {
       name,
       description,
       ingredients,
-      value
+      value,
+      followUp_id,
+      user_id
     })
 
     return response.json({ plate })
