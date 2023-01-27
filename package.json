@@ -1,0 +1,12 @@
+{
+  "name": "back",
+  "version": "1.0.0",
+  "description": "Desafio final programa Explorer rocketSeat",
+  "main": "index.js",
+  "scripts": {
+    "dev": "dasdas"
+  },
+  "keywords": [],
+  "author": "Francisco Zufi ",
+  "license": "ISC"
+}
