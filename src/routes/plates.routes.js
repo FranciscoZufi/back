@@ -18,10 +18,10 @@ platesRoutes.post('/', adminAuthenticated, platesController.create)
 platesRoutes.get('/', platesController.index)
 platesRoutes.put('/:id', adminAuthenticated, platesController.update)
 platesRoutes.patch(
-  '/avatar',
+  '/:id',
   adminAuthenticated,
   upload.single('avatar'),
-  platesAvatarController.updateImg
+  platesAvatarController.update
 )
 platesRoutes.get('/:id', platesController.show)
 platesRoutes.delete('/:id', adminAuthenticated, platesController.delete)

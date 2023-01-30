@@ -4,7 +4,6 @@ const authConfig = require('../configs/auth')
 
 function adminAuthenticated(request, response, next) {
   const user = request.user
-  console.log({ user })
   if (user.admin === 0) {
     throw new AppError('Usuário não autorizado', 401)
   }

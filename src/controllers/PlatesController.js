@@ -5,7 +5,7 @@ class platesController {
     const user = request.user.id
 
     const followUp = await knex('followUp').where({ user_id: user }).first()
-    console.log({ followUp })
+
     const plates = await knex('plates')
       .where({ followUp_id: followUp.id })
       .orderBy('id')

@@ -3,21 +3,21 @@ const AppError = require('../utils/AppError')
 const DiskStorage = require('../providers/DiskStorage')
 
 class PlatesAvatarController {
-  async updateImg(request, response) {
-    const plates_id = request.plates.id
+  async update(request, response) {
+    const plate_id = request.plate.id
 
-    const avatarFilename = request.file.filename
+    const imgFilename = request.file.filename
     const diskStorage = new DiskStorage()
 
-    const plate = await knex('plates').where({ id: plates_id }).first()
+    const plate = await knex('plates').where({ id: plate_id }).first()
     if (!plate) {
-      throw new AppError('Only authenticated users can change avatar', 401)
+      throw new AppError('Este prato não existe!', 401)
     }
-    if (plate.avatar) {
-      await diskStorage.deleteFile(plate.avatar)
+    if (plate.img) {
+      await diskStorage.deleteFile(plate.img)
     }
-    const filename = await diskStorage.saveFile(avatarFilename)
-    plate.avatar = filename
+    const filename = await diskStorage.saveFile(imgFilename)
+    plate.img = filename
     await knex('plates').update(plate).where({ id: plate_id })
 
     return response.json(plate)
