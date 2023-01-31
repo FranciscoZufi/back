@@ -4,12 +4,12 @@ const DiskStorage = require('../providers/DiskStorage')
 
 class PlatesAvatarController {
   async update(request, response) {
-    const plate_id = request.plate.id
+    const { id } = request.params
 
     const imgFilename = request.file.filename
     const diskStorage = new DiskStorage()
 
-    const plate = await knex('plates').where({ id: plate_id }).first()
+    const plate = await knex('plates').where({ id }).first()
     if (!plate) {
       throw new AppError('Este prato não existe!', 401)
     }
@@ -18,7 +18,7 @@ class PlatesAvatarController {
     }
     const filename = await diskStorage.saveFile(imgFilename)
     plate.img = filename
-    await knex('plates').update(plate).where({ id: plate_id })
+    await knex('plates').update(plate).where({ id })
 
     return response.json(plate)
   }
