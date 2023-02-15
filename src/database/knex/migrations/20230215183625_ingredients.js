@@ -1,15 +1,12 @@
 exports.up = knex =>
-  knex.schema.createTable('plates', table => {
+  knex.schema.createTable('ingredients', table => {
     table.increments('id')
     table.text('name')
-    table.text('description')
-    table.text('value')
-    table.text('img')
     table.integer('user_id').references('id').inTable('users')
     table
-      .integer('followUp_id')
+      .integer('plates_id')
       .references('id')
-      .inTable('followUp')
+      .inTable('plates')
       .onDelete('CASCADE')
   })
 
