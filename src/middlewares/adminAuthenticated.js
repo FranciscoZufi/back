@@ -1,6 +1,4 @@
 const AppError = require('../utils/AppError')
-const { verify } = require('jsonwebtoken')
-const authConfig = require('../configs/auth')
 
 function adminAuthenticated(request, response, next) {
   const user = request.user
